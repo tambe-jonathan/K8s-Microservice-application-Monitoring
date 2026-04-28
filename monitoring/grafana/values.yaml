@@ -1,0 +1,9 @@
+adminUser: admin
+adminPassword: admin
+
+service:
+  type: ClusterIP
+
+sidecar:
+  dashboards:
+    enabled: true
