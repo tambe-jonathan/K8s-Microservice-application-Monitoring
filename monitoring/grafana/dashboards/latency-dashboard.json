@@ -1,0 +1,14 @@
+{
+  "title": "Latency Monitoring",
+  "panels": [
+    {
+      "type": "graph",
+      "title": "Request Latency (simulated)",
+      "targets": [
+        {
+          "expr": "rate(http_request_duration_seconds_sum[1m])"
+        }
+      ]
+    }
+  ]
+}
