@@ -11,8 +11,8 @@ if minikube status -p $PROFILE >/dev/null 2>&1; then
 else
   minikube start \
     -p $PROFILE \
-    --cpus=4 \
-    --memory=8192 \
+    --cpus=2 \
+    --memory=4096 \
     --driver=docker
 fi
 
