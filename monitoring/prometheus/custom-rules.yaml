@@ -1,33 +1,54 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: custom-alerts
+  name: sre-alerts
   namespace: monitoring
 spec:
   groups:
-    - name: custom.rules
+    - name: sre.rules
       rules:
 
-        - alert: HighCPUUsage
-          expr: sum(rate(container_cpu_usage_seconds_total[1m])) > 0.8
-          for: 2m
+        # Cluster CPU saturation
+        - alert: ClusterHighCPU
+          expr: 100 - (avg(rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+          for: 5m
           labels:
             severity: warning
           annotations:
-            summary: "High CPU usage detected"
+            summary: "Cluster CPU usage above 80%"
 
-        - alert: HighMemoryUsage
-          expr: sum(container_memory_usage_bytes) / sum(machine_memory_bytes) > 0.8
-          for: 2m
+        #  Cluster memory pressure
+        - alert: ClusterHighMemory
+          expr: (1 - (sum(node_memory_MemAvailable_bytes) / sum(node_memory_MemTotal_bytes))) * 100 > 80
+          for: 5m
           labels:
             severity: warning
           annotations:
-            summary: "High memory usage detected"
+            summary: "Cluster memory usage above 80%"
 
-        - alert: PodRestarting
-          expr: increase(kube_pod_container_status_restarts_total[5m]) > 1
-          for: 1m
+        #  Pod crash loop
+        - alert: PodRestartingFrequently
+          expr: increase(kube_pod_container_status_restarts_total[5m]) > 2
+          for: 2m
           labels:
             severity: critical
           annotations:
             summary: "Pod restarting frequently"
+
+        #  Pod not running
+        - alert: PodNotRunning
+          expr: kube_pod_status_phase{phase!="Running"} > 0
+          for: 2m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Some pods are not running"
+
+        #  High network traffic spike
+        - alert: HighNetworkTraffic
+          expr: sum(rate(container_network_receive_bytes_total[1m])) > 10000000
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High network traffic detected"
