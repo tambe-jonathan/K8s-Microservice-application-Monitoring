@@ -12,7 +12,7 @@ else
   minikube start \
     -p $PROFILE \
     --cpus=2 \
-    --memory=4096 \
+    --memory=3072 \
     --driver=docker
 fi
 
