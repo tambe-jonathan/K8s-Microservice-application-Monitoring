@@ -1,0 +1,6 @@
+Subject: Alert: {{ .CommonAnnotations.summary }}
+
+Alert Details:
+{{ range .Alerts }}
+- {{ .Annotations.summary }}
+{{ end }}
