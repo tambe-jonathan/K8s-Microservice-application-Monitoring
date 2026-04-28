@@ -1,0 +1,33 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: custom-alerts
+  namespace: monitoring
+spec:
+  groups:
+    - name: custom.rules
+      rules:
+
+        - alert: HighCPUUsage
+          expr: sum(rate(container_cpu_usage_seconds_total[1m])) > 0.8
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High CPU usage detected"
+
+        - alert: HighMemoryUsage
+          expr: sum(container_memory_usage_bytes) / sum(machine_memory_bytes) > 0.8
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: "High memory usage detected"
+
+        - alert: PodRestarting
+          expr: increase(kube_pod_container_status_restarts_total[5m]) > 1
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Pod restarting frequently"
