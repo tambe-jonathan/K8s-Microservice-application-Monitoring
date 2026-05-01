@@ -5,33 +5,33 @@ set -euo pipefail
 NAMESPACE="monitoring"
 RELEASE_NAME="monitoring"
 
-echo "🚀 Starting Monitoring Stack Deployment..."
+echo " Starting Monitoring Stack Deployment..."
 
 # ---------- Step 1: Create Namespace ----------
-echo "📦 Creating namespace..."
+echo " Creating namespace..."
 kubectl create namespace $NAMESPACE || echo "Namespace already exists"
 
 # ---------- Step 2: Add Helm Repo ----------
-echo "📦 Setting up Helm repo..."
+echo " Setting up Helm repo..."
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts >/dev/null 2>&1 || true
 helm repo update >/dev/null
 
 # ---------- Step 3: Deploy kube-prometheus-stack ----------
-echo "📊 Deploying Prometheus + Grafana + Alertmanager..."
+echo " Deploying Prometheus + Grafana + Alertmanager..."
 
 helm upgrade --install $RELEASE_NAME prometheus-community/kube-prometheus-stack \
   --namespace $NAMESPACE \
   -f monitoring/prometheus/values.yaml
 
-echo "⏳ Waiting for monitoring pods to be ready..."
+echo " Waiting for monitoring pods to be ready..."
 kubectl wait --for=condition=ready pod --all -n $NAMESPACE --timeout=300s || true
 
 # ---------- Step 4: Apply Custom Alert Rules ----------
-echo "🚨 Applying custom alert rules..."
+echo " Applying custom alert rules..."
 kubectl apply -f monitoring/prometheus/custom-rules.yaml
 
 # ---------- Step 5: Create Grafana Dashboards ConfigMap ----------
-echo "📊 Loading Grafana dashboards..."
+echo " Loading Grafana dashboards..."
 
 kubectl create configmap grafana-dashboards \
   --from-file=monitoring/grafana/dashboards \
