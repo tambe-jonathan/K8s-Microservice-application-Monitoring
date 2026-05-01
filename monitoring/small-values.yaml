@@ -1,0 +1,31 @@
+# Custom configuration to fit a t2.medium (4GB RAM)
+prometheus:
+  prometheusSpec:
+    # We limit how much Prometheus can 'eat' so the server doesn't freeze
+    resources:
+      requests:
+        memory: "1000Mi"
+        cpu: "200m"
+      limits:
+        memory: "2000Mi"
+        cpu: "500m"
+    # Reduce storage retention to save disk space if needed
+    retention: 2d
+
+grafana:
+  # Basic resources for the dashboard UI
+  resources:
+    requests:
+      memory: "200Mi"
+      cpu: "100m"
+    limits:
+      memory: "512Mi"
+      cpu: "300m"
+  
+  # This section helps Grafana find your custom dashboards in ConfigMaps
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      labelValue: "1"
+      searchNamespace: ALL
