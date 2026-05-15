@@ -1,5 +1,4 @@
-# K8s-Microservice-application-Monitoring
-Production-grade Kubernetes monitoring system using Prometheus, Grafana, and Alertmanager, deployed on Minikube with a microservices application and real-time alerting
+
 # Kubernetes Observability Platform with Prometheus & Grafana
 
 A production-style Kubernetes observability project designed to monitor a microservices application using Prometheus, Grafana, Alertmanager, kube-state-metrics, and Node Exporter.
