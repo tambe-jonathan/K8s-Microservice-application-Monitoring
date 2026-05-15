@@ -13,7 +13,7 @@ The project demonstrates:
 
 ---
 
-# 📊 Architecture
+#  Architecture
 
 Components used:
 
@@ -27,7 +27,7 @@ Components used:
 
 ---
 
-# 📁 Project Structure
+#  Project Structure
 
 ```bash
 .
@@ -42,7 +42,7 @@ Components used:
 
 ---
 
-# 🚀 Prerequisites
+#  Prerequisites
 
 Install:
 - Docker
@@ -59,7 +59,7 @@ bash bootstrap/install-tools.sh
 
 ---
 
-# ⚙️ Start Kubernetes Cluster
+#  Start Kubernetes Cluster
 
 ```bash
 bash bootstrap/start-cluster.sh
@@ -73,7 +73,7 @@ kubectl get nodes
 
 ---
 
-# 🛍️ Deploy Online Boutique Application
+#  Deploy Online Boutique Application
 
 ```bash
 bash operations/deploy-app.sh
@@ -87,7 +87,7 @@ kubectl get pods -n boutique
 
 ---
 
-# 📊 Deploy Monitoring Stack
+#  Deploy Monitoring Stack
 
 This project uses the kube-prometheus-stack Helm chart.
 
@@ -106,7 +106,7 @@ This deploys:
 
 ---
 
-# 🌐 Access Grafana
+#  Access Grafana
 
 ```bash
 kubectl port-forward svc/monitoring-grafana 3000:80 -n monitoring
@@ -120,7 +120,7 @@ http://localhost:3000
 
 ---
 
-# 🔐 Grafana Credentials
+#  Grafana Credentials
 
 Get password:
 
@@ -137,7 +137,7 @@ admin
 
 ---
 
-# 📈 Dashboards
+#  Dashboards
 
 Included dashboards:
 - Cluster Health
@@ -152,7 +152,7 @@ monitoring/grafana/dashboards/
 
 ---
 
-# 🚨 Alert Rules
+#  Alert Rules
 
 Custom Prometheus alert rules monitor:
 - High CPU usage
@@ -175,7 +175,7 @@ kubectl apply -f monitoring/prometheus/custom-rules.yaml
 
 ---
 
-# ⚡ Load Testing
+#  Load Testing
 
 Generate traffic:
 
@@ -191,7 +191,7 @@ k6 run load-testing/scenarios/stress-test.js
 
 ---
 
-# 🧪 Validation
+#  Validation
 
 Simulate pod failure:
 
@@ -206,7 +206,7 @@ Expected results:
 
 ---
 
-# 📚 Key Learning Outcomes
+#  Key Learning Outcomes
 
 - Kubernetes observability
 - Prometheus monitoring
@@ -218,7 +218,7 @@ Expected results:
 
 ---
 
-# 📌 Future Improvements
+#  Future Improvements
 
 - Slack alert integration
 - Distributed tracing with Jaeger
@@ -227,7 +227,7 @@ Expected results:
 
 ---
 
-# 👨‍💻 Author
+#  Author
 
 Agbor Jonathan Tambe  
 Boogeyman Labs
